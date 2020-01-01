@@ -1,0 +1,108 @@
+@import "./variables.scss";
+
+.main-content-container.search
+{
+	padding: 0 $padding-default $spacing-lead-tail-thin $padding-default;
+
+	.search-container
+	{
+		background: $background-color-box;
+		border-radius: 50px;
+		margin:  0 auto $spacing-lead-tail-thin auto;
+		max-width: 600px;
+		padding: $padding-default 50px $padding-default 20px;
+		position: relative;
+
+		input::placeholder
+		{
+			color: #aaaaaa;
+		}
+
+		input[type=text]:focus
+		{
+			outline: none;
+		}
+
+		input
+		{
+			background: none;
+			border: none;
+			border-radius: 0;
+			// border-bottom: 1px solid $border-color-default;
+		}
+
+		button
+		{
+			background: $color-grey;
+			border: none;
+			border-radius: 0 50px 50px 0;
+			position: absolute;
+			height: 100%;
+			width: 40px;
+			right: -1px;
+			top: 0;
+		}
+	}
+
+	.results-container
+	{
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-gap: $margin-default;
+		margin: 0 auto;
+		overflow: hidden;
+		width: 1398px;
+
+		@media screen and (max-width: 1420px)
+		{
+			grid-template-columns: 1fr 1fr 1fr;
+			width: 1046px;
+		}
+
+		@media screen and (max-width: #{map-get($breakpoints, "r720p")})
+		{
+			grid-template-columns: 1fr 1fr;
+			width: 694px;
+		}
+
+		@media screen and (max-width: #{map-get($breakpoints, "tablet")})
+		{
+			grid-template-columns: 1fr;
+			width: 342px;
+		}
+
+		.entry
+		{
+			border: 1px solid $border-color-default;
+			padding: $padding-default;
+			text-align: center;
+			width: 342px;
+
+			a
+			{
+				display: block;
+				font-size: .8rem;
+				width: 320px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			img
+			{
+				height: 180px;
+				width: 320px;
+				object-fit: cover;
+				object-position: top center;
+			}
+		}
+	}
+
+	.notice
+	{
+		font-size: 16px;
+		font-weight: 600;
+		padding-top: $spacing-lead-tail-default;
+		padding-bottom: $spacing-lead-tail-default;
+		text-align: center;
+	}
+}

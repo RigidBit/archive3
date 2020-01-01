@@ -1,0 +1,50 @@
+@import "./variables.scss";
+
+.main-content-container.submit
+{
+	padding: 0 $padding-default $spacing-lead-tail-thin $padding-default;
+
+	h1
+	{
+		font-size: 2.5rem;
+		line-height: 1.5em;
+		margin-bottom: $spacing-lead-tail-thin;
+		text-align: center;
+	}
+
+	.form-container,
+	.text-container
+	{
+		margin: 0 auto 1rem auto;
+		max-width: 800px;
+		padding: $padding-default;
+		width: 100%;
+	}
+
+	.form-container
+	{
+		#url
+		{
+			display: inline-block;
+			height: 37px;
+			margin-bottom: $margin-default;
+			margin-right: $margin-button;
+			width: calc(100% - 90px);
+			vertical-align: top;
+		}
+
+		#submit
+		{
+			display: inline-block;
+			height: 37px;
+			width: 80px;
+			vertical-align: top;
+		}
+	}
+
+	.text-container
+	{
+		text-align: center;
+	}
+
+}

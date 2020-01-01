@@ -1,0 +1,47 @@
+@import "./variables.scss";
+
+.main-content-container.manage
+{
+	padding: $padding-default;
+	text-align: center;
+
+	#url
+	{
+		width: 500px;
+	}
+
+	#form
+	{
+		margin-bottom: $margin-default;
+	}
+
+	#tools
+	{
+		display: inline-block;
+
+		a
+		{
+			margin-right: $margin-button;
+		}
+	}
+
+	#preview
+	{
+		border: 1px solid $border-color-default;
+		display: block;
+		height: 720px;
+		margin: 0 auto;
+		object-fit: cover;
+		object-position: top center;
+		width: 1280px;
+	}
+
+	.notice
+	{
+		font-size: 16px;
+		font-weight: 600;
+		margin-top: $spacing-lead-tail-default;
+		margin-bottom: $spacing-lead-tail-default;
+		text-align: center;
+	}
+}

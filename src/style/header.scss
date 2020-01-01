@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+header
+{
+	height: 50px;
+	padding: $padding-default;
+	width: 100%;
+
+	&.dark
+	{
+		background: rgba(0, 0, 0, 0.2);
+		position: absolute;
+	}
+
+	&.light
+	{
+		background: rgba(255, 255, 255, 1);
+	}
+
+	.logo
+	{
+		float: left;
+		height: 30px;
+	}
+
+	.twitter-follow-button
+	{
+		float: right;
+		height: 30px;
+		margin-top: 5px;
+	}
+}

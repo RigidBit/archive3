@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+<div class="main-content-container urls">
+	<h1>URL List</h1>
+
+	<div class="urls-container">
+		<table>
+			{% for d in data.urls %}
+			<tr>
+				<td><a href="/view?url={{ d.url }}">{{ d.url }}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

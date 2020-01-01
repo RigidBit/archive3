@@ -1,0 +1,67 @@
+@import "./variables.scss";
+
+.main-content-container.recent
+{
+	padding: 0 $padding-default $spacing-lead-tail-thin $padding-default;
+	
+	h1
+	{
+		font-size: 2.5rem;
+		line-height: 1.5em;
+		margin-bottom: $spacing-lead-tail-thin;
+		text-align: center;
+	}
+
+	.recent-container
+	{
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-gap: $margin-default;
+		margin: 0 auto;
+		overflow: hidden;
+		width: 1398px;
+
+		@media screen and (max-width: 1420px)
+		{
+			grid-template-columns: 1fr 1fr 1fr;
+			width: 1046px;
+		}
+
+		@media screen and (max-width: #{map-get($breakpoints, "r720p")})
+		{
+			grid-template-columns: 1fr 1fr;
+			width: 694px;
+		}
+
+		@media screen and (max-width: #{map-get($breakpoints, "tablet")})
+		{
+			grid-template-columns: 1fr;
+			width: 342px;
+		}
+
+		.entry
+		{
+			border: 1px solid $border-color-default;
+			padding: $padding-default;
+			text-align: center;
+			width: 342px;
+
+			a
+			{
+				display: block;
+				font-size: .8rem;
+				width: 320px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			img
+			{
+				height: 180px;
+				width: 320px;
+				object-fit: cover;
+				object-position: top center;
+			}
+		}
+	}
+}

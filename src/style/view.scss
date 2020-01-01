@@ -1,0 +1,53 @@
+@import "./variables.scss";
+
+.main-content-container.view
+{
+	padding: $padding-default;
+	margin: 0;
+
+	.toolbar
+	{
+		display: grid;
+		grid-template-columns: 4fr 2fr 150px;
+		grid-gap: $margin-default;
+		margin-bottom: $margin-default;
+
+		@media screen and (max-width: #{map-get($breakpoints, "desktop")})
+		{
+			grid-template-columns: 3fr 2fr 150px;
+		}
+
+		@media screen and (max-width: #{map-get($breakpoints, "tablet")})
+		{
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.screenshot-viewer
+	{
+		.screenshot-container
+		{
+			width: 100%;
+
+			.screenshot
+			{
+				border: 1px solid $border-color-default;
+				display: block;
+				margin: 0 auto 0 auto;
+				max-width: 100%;
+
+				&.pending
+				{
+					margin-top: 30px;
+				}
+
+				&.unavailable,
+				&.failed
+				{
+					margin-top: 20px;
+					width: 100px;
+				}
+			}
+		}
+	}
+}

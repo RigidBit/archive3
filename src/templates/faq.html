@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+<div class="main-content-container faq">
+	<h1>Frequently Asked Questions</h1>
+
+	<div class="question-container">
+		<h2>How do I submit a new URL to Archive3?</h2>
+		<p>
+			Use our <a href="/submit">submission form</a>.
+		</p>
+	</div>
+
+	<div class="question-container">
+		<h2>What is Archive3?</h2>
+		<p>
+			Archive3 is an internet archival service that takes screenshots of websites at intervals to show how they change over time.
+			All screenshots are anchored in a public blockchain so they can be proven to be unaltered since inclusion.
+		</p>
+		<p>
+			Archive3 is built on <a href="https://www.rigidbit.com/" target="_blank">RigidBit</a>, a self-contained micro-blockchain which anchors to all major public blockchains.
+			Archive3 anchors to <a href="https://www.ethereum.org/" target="_blank">Ethereum</a>.
+		</p>
+	</div>
+
+	<div class="question-container">
+		<h2>Why does Archive3 save screenshots instead of HTML?</h2>
+		<p>
+			Archive3 uses screenshots instead of saving the HTML directly because this is the most reliable way to capture website content.
+			Modern web development is extremely complex, and creating a mirror of the original site is difficult and sometimes not possible.
+		</p>
+		<p>
+			Other archive services may use different methods for capture.
+			Some of these methods have shown that they do not age gracefully.
+			Very old pages often do not render anything like they did in the past.
+			Modern browsers render the pages differently, and some resources are missing.
+			The end result is that pieces of history are lost.
+		</p>
+		<p>
+			Archive3's priority is to show the website exactly as it was at the time of capture.
+		</p>
+	</div>
+
+	<div class="question-container">
+		<h2>Why does Archive3 only capture the front page?</h2>
+		<p>
+			Archive3 does capture specific internal pages on some websites.
+			Archive3 only captures the front page on most websites because that is typically the most important.
+			In the future, Archive3 may choose to capture more pages, or even all pages of some websites.
+		</p>
+	</div>
+
+	<div class="question-container">
+		<h2>How can I support Archive3?</h2>
+		<p>
+			You can support Archive3 by using our service and sharing it with your friends. 😁
+		</p>
+	</div>
+
+</div>
+<script>
+$("code").on("click", function(e)
+{
+	const clipboard = new ClipboardJS("code");
+	clipboard.on("success", function(e)
+	{
+		nativeToast({ message: "Text copied to clipboard!", position: "north", timeout: 3000 });
+	});
+});
+</script>
+{% include "footer.html" %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+{% if data.job_id is defined %}
+<div class="main-content-container buried">
+	<form id="form" action="/buried" method="post">
+		<input id="action" type="hidden" name="action" value="">
+		<input id="job_id" type="hidden" name="job_id" value="{{ data.job_id }}">
+		<button id="delete" class="button" type="button">Delete</button>
+		<button id="kick" class="button" type="button">Retry</button>
+	</form>
+	<div class="data">
+		{{data}}
+	</div>
+	<script>
+		$("#delete").on("click", (e)=>
+		{
+			$("#action").val("delete");
+			$("#form").submit();
+		});
+		$("#kick").on("click", (e)=>
+		{
+			$("#action").val("kick");
+			$("#form").submit();
+		});
+	</script>
+</div>
+{% else %}
+<div class="main-content-container buried">
+	<div class="notice">
+		No buried jobs!
+	</div>
+</div>
+{% endif %}
+{% include "footer.html" %}
+{% endblock %}

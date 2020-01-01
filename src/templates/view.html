@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+<div class="main-content-container view">
+{{ data.proof_available }}
+	<div class="toolbar">
+		<input class="url" type="text" value="{{ data.url_record['url'] }}" disabled>
+		<select id="date">
+			{% for r in data.data_records %}
+			<option value="{{ r.id }}">{{ loop.index }}/{{ data.data_records|length }} - {{ r.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</option>
+			{% endfor %}
+		</select>
+		<button id="proof" type="button" class="proof" disabled></button>
+	</div>
+	<div class="screenshot-viewer">
+		<div class="screenshot-container">
+			<img id="screenshot" class="screenshot" src="" alt="Screenshot {{ data.url_record['url'] }}">
+		</div>
+	</div>
+</div>
+<script>
+const data_records = JSON.parse('{{ data.data_records_json|safe }}');
+function dateChanged()
+{
+	updateProofStatusButton();	
+	updateActiveScreenshot();
+}
+function downloadProof()
+{
+	const id = parseInt($("#date").val());
+	const data = findDataRecordById(id);
+	if(data.proof_available)
+		window.location = "/proof/"+data.id;
+}
+function findDataRecordById(id)
+{
+	for(d in data_records)
+	{
+		if(data_records[d]["id"] === id)
+			return data_records[d];
+	}
+}
+function updateActiveScreenshot()
+{
+	const id = parseInt($("#date").val());
+	const data = findDataRecordById(id);
+	const base_url = "{{ data.cdn_base_url }}" + data.hash;
+	const screenshot_url = base_url + ".png";
+	$("#screenshot").attr("src", "");
+	setTimeout(()=>
+	{
+		$("#screenshot").attr("src", screenshot_url);
+	}, 1);
+}
+function updateProofStatusButton()
+{
+	const id = parseInt($("#date").val());
+	const data = findDataRecordById(id);
+	const $proof = $("#proof");
+	$proof.prop("disabled", !data.proof_available);
+	$proof.text((data.proof_available) ? "Download Proof" : "Proof Pending");
+}
+$(document).ready(function()
+{
+	$("#date").on("change", (e)=>dateChanged());
+	dateChanged();
+	$("#date").focus();
+	$("#proof").on("click", (e)=>downloadProof());
+
+});
+</script>
+
+{% include "footer.html" %}
+{% endblock %}

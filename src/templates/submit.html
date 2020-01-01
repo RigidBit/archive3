@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+<div class="main-content-container submit">
+	<h1>Submit a URL</h1>
+
+	{% if data.message %}
+	<div class="text-container">
+		<p class="no-margin">
+			{{ data.message }}
+		</p>
+	</div>
+	{% endif %}
+
+	<div class="form-container">
+		<form id="form-search" action="/submit" method="post">
+			<input id="url" type="url" name="url" placeholder="http://google.com/" required><button id="submit" type="submit">Submit</button>
+		</form>
+	</div>
+
+	<div class="text-container">
+		<p class="no-margin">
+			By submitting a URL you agree to the <a href="/terms-of-service">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.
+		</p>
+	</div>
+</div>
+<script>
+$(document).ready(function()
+{
+	$("#url").focus();
+	if($("#url").val() == "") $("#url").val("https://");
+});
+</script>
+{% include "footer.html" %}
+{% endblock %}

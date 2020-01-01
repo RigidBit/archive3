@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+<div class="main-content-container stats">
+	<h1>Stats</h1>
+
+	<div class="stats">
+		<div class="stat">
+			<h2>Total Data Records</h2>
+			{{data.data_count}}
+		</div>
+		<div class="stat">
+			<h2>Total URLs</h2>
+			{{data.url_count}}
+		</div>
+		<div class="stat">
+			<h2>Total Submissions</h2>
+			{{data.submission_count}}
+		</div>
+		<div class="stat">
+			<h2>Pending Submissions</h2>
+			{{data.pending_submission_count}}
+		</div>
+	</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

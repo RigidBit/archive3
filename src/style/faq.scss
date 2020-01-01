@@ -1,0 +1,23 @@
+@import "./variables.scss";
+
+.main-content-container.faq
+{
+	padding: 0 $padding-default $spacing-lead-tail-thin $padding-default;
+
+	h1
+	{
+		font-size: 2.5rem;
+		line-height: 1.5em;
+		margin-bottom: $spacing-lead-tail-thin;
+		text-align: center;
+	}
+
+	.question-container
+	{
+		// border: 1px solid $border-color-light;
+		margin: 0 auto 1rem auto;
+		max-width: 800px;
+		padding: $padding-default;
+		width: 100%;
+	}
+}

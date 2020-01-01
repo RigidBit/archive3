@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+<div class="main-content-container recent">
+	<h1>Recent Activity</h1>
+
+	<div class="recent-container">
+		{% for d in data.recent %}
+		<div class="entry">
+			<a href="/view?url={{ d.url }}"><img src="{{ data.cdn_base_url }}{{ d.hash }}_thumb.jpg" alt="Screenshot {{ d.url }}"></a>
+			<a href="{{ d.url }}" target="_blank">{{ d.url }}</a>
+		</div>	
+		{% endfor %}
+	</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

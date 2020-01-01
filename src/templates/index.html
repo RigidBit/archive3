@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block body %}
+<header class="dark">
+	<a href="/"><img class="logo" src="/static/image/archive3-logo-white.png" alt="Archive3 Logo"></a>
+	<a class="twitter-follow-button" href="https://twitter.com/archive3web?ref_src=twsrc%5Etfw" data-show-count="false">Follow @archive3web</a>
+</header>
+<div class="main-content-container index">
+	<div class="search-container">
+		<form id="form-search" action="/search" method="get">
+			<input id="search" type="text" name="q" placeholder="Search Archive3 for a keyword or domain. eg: google.com" required>
+			<button id="submit" type="submit"><i class="fas fa-search"></i></button>
+		</form>
+	</div>
+</div>
+<script>
+$(document).ready(function()
+{
+	// Add a random background image.
+	const backgroundImageCount = 12;
+	const randomNumber = Math.floor(Math.random() * backgroundImageCount) + 1;
+	const imageNumber = (randomNumber < 10) ? "0" + randomNumber : randomNumber;
+	const imageUrl = `url('/static/image/background/background-${imageNumber}.jpg')`;
+	$(".main-content-container.index").css("background-image", imageUrl);
+
+	// Focus input field.
+	$("#search").focus();
+});
+</script>
+{% include "footer.html" %}
+{% endblock %}

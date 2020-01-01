@@ -1,0 +1,23 @@
+{
+  "name": "Archive3",
+  "version": "1.0.0",
+  "description": "This is the primary codebase for the Archive3 web application.",
+  "private": true,
+  "scripts": {
+    "start": "npx webpack --watch --config webpack.config.js",
+    "build": "npx webpack --config webpack.config.js",
+    "flask": "FLASK_APP=src/web.py FLASK_DEBUG=1 python -m flask run -h 0.0.0.0 -p 5001"
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "css-loader": "^3.2.1",
+    "ignore-emit-webpack-plugin": "^2.0.2",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

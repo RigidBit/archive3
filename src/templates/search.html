@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "header.html" %}
+<div class="main-content-container search">
+	<div class="search-container">
+		<form id="form-search" action="/search" method="get">
+			<input id="search" type="text" name="q" placeholder="Search Archive3 for a keyword or domain. eg: google.com" required>
+			<button id="submit" type="submit"><i class="fas fa-search"></i></button>
+		</form>
+	</div>
+
+	{% if data.search_results|length > 0 %}
+	<div class="results-container">
+		{% for search in data.search_results %}
+		<div class="entry">
+			<a href="/view?url={{ search.url }}"><img src="{{ data.cdn_base_url }}{{ search.hash }}_thumb.jpg"></a>
+			<a href="{{ search.url }}" target="_blank">{{ search.url }}</a>
+		</div>
+		{% endfor %}
+	</div>
+	{% else %}
+	<div class="notice">
+		Your search returned no results.
+	</div>
+	{% endif %}
+</div>
+<script>
+$(document).ready(function()
+{
+	// Focus input field.
+	$("#search").focus();
+	$("#search").val("{{ data.search_term }}");
+});
+</script>
+{% include "footer.html" %}
+{% endblock %}
