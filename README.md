@@ -26,9 +26,9 @@ You must have the following installed in your development environment to properl
 ## Development Server Prerequisites
 
 * Apache or Nginx with WSGI/UWSGI capability.
-* Beanstalkd
-* PostgreSQL
-* RigidBit
+* Beanstalkd (https://beanstalkd.github.io/)
+* PostgreSQL (https://www.postgresql.org/)
+* RigidBit (https://www.rigidbit.com/)
 * Selenium server with Chrome webdriver.
 
 ## Basic Webserver Setup Procedure
@@ -47,6 +47,7 @@ source venv/bin/activate
 
 ### Installing dependencies:
 ```
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -56,18 +57,30 @@ Using `pipreqs` is recommended over `pip`. While in an active venv use the follo
 pipreqs --ignore node_modules --force
 ```
 
+### Starting the development server:
+```
+source venv/bin/activate
+```
+or
+```
+FLASK_APP=src/web.py FLASK_DEBUG=1 python -m flask run -h 0.0.0.0 -p 5001
+```
+
 ### Starting the development CSS builder:
 ```
 npm start
 ```
 
-### Starting the development server:
+### Starting the processing service:
 ```
-npm run flask
+source venv/bin/activate
+python3 processor.py
 ```
-or
+
+### Starting the queue processing service:
 ```
-FLASK_APP=src/web.py FLASK_DEBUG=1 python -m flask run -h 0.0.0.0 -p 5001
+source venv/bin/activate
+python3 queue_processor.py
 ```
 
 ### Building static assets for production:
