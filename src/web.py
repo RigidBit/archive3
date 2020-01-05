@@ -81,14 +81,14 @@ def manage():
 				misc.log_message(f"""Created url record: {record["url"]}""")
 			db.delete_submission_record(connection, item)
 			misc.log_message(f"""Deleted submission record: {item}""")
-			file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(item) + ".png")
+			file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(item) + ".jpg")
 			os.remove(file_path_screenshot)
 			misc.log_message(f"""Deleted local preview screenshot: {file_path_screenshot}""")
 		rejected = json.loads(form.data["rejected"])
 		for item in rejected:
 			db.delete_submission_record(connection, item)
 			misc.log_message(f"""Deleted submission record: {item}""")
-			file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(item) + ".png")
+			file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(item) + ".jpg")
 			os.remove(file_path_screenshot)
 			misc.log_message(f"""Deleted local preview screenshot: {file_path_screenshot}""")
 		connection.commit()
@@ -145,7 +145,7 @@ def submit():
 def preview():
 	form = v.PreviewForm(request.values)
 	if form.validate():
-		filename = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(form.data["id"]) + ".png")
+		filename = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(form.data["id"]) + ".jpg")
 		if os.path.exists(filename):
 			return send_file(filename)
 		else:

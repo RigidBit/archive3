@@ -96,16 +96,13 @@ def process_preview(connection, payload):
 	misc.log_message(f"Generated screenshot: {file_path_temp}")
 
 	# Compress screenshot.
-	# compress_preview(file_path_temp, file_path_screenshot)
-	# file_path_thumb = os.path.join(misc.hash_to_path(hash), hash + "_thumb.jpg")
-	# ss.generate_thumbnail(file_path_screenshot, file_path_thumb)
-	# misc.log_message(f"""Thumbnail created: {file_path_thumb}""")
+	file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(payload["id"]) + ".jpg")
+	ss.compress_preview(file_path_temp, file_path_screenshot)
+	misc.log_message(f"""Compressed screenshot created: {file_path_screenshot}""")
 
-	# Rename screenshot.
-	file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(payload["id"]) + ".png")
-	os.makedirs(os.path.dirname(file_path_screenshot), exist_ok=True)
-	os.rename(file_path_temp, file_path_screenshot)
-	misc.log_message(f"""Screenshot moved to destination: {file_path_screenshot}""")
+	# Remove temp file.
+	os.remove(file_path_temp)
+	misc.log_message(f"""Temp file deleted: {file_path_temp}""")
 
 	# Update submission record.
 	data = {"ready": "true"}
