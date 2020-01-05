@@ -22,7 +22,7 @@
 			<a href="#-/">-/</a>
 		</div>
 	</form>
-	<img id="preview" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=" alt="Preview Image">
+	<img id="preview" src="/preview?id={{ data.id }}" alt="Preview Image">
 	<script>
 		$("#reject").on("click", (e)=>
 		{
@@ -34,7 +34,14 @@
 			$("#action").val("approve");
 			$("#form").submit();
 		});
-		function updateUrl() { $("#preview").attr("src", "/preview?url=" + $("#url").val()); }
+		function updateUrl()
+		{
+			$("#preview").attr("src", "");
+			setTimeout(function()
+			{
+				$("#preview").attr("src", "/preview?url=" + $("#url").val());
+			}, 1);
+		}
 		$("#url").on("change, keyup", (e)=>{ updateUrl(); });
 		$("a[href='#+www']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val().replace("//", "//www.")); updateUrl(); });
 		$("a[href='#-www']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val().replace("//www.", "//")); updateUrl(); });
@@ -49,7 +56,6 @@
 		url = url.replace("http://", "https://");
 		if(/\.[a-z]{1,3}$/.test(url)) { url += "/"; }
 		$("#url").val(url);
-		updateUrl();
 	</script>
 </div>
 {% else %}

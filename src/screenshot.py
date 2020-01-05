@@ -71,3 +71,12 @@ def generate_thumbnail(screenshot_input, screenshot_output):
 		image = background
 	image = image.resize((320, 180), resample=Image.BILINEAR)
 	image.save(screenshot_output, quality=90, optimize=True, progressive=False)
+
+# def compress_preview(screenshot_input, screenshot_output):
+# 	image = Image.open(screenshot_input)
+# 	# Remove alpha channel so it can be saved to jpeg.
+# 	if image.mode in ('RGBA', 'LA'):
+# 		background = Image.new(image.mode[:-1], image.size, "#ffffff")
+# 		background.paste(image, (0, 0))
+# 		image = background
+# 	image.save(screenshot_output, quality=60, optimize=True, progressive=False)

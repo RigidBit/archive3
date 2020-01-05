@@ -59,11 +59,11 @@ def create_url_record(connection, data):
 # 	cursor.execute(query)
 # 	return cursor.fetchone()[0]
 
-# def delete_submission_record(connection, id):
-# 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-# 	cursor.execute("DELETE FROM submissions WHERE id=%s RETURNING *;", (id,))
-# 	record = cursor.fetchone()
-# 	return dict(record) if record is not None else None
+def delete_submission_record(connection, id):
+	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+	cursor.execute("DELETE FROM submissions WHERE id=%s RETURNING *;", (id,))
+	record = cursor.fetchone()
+	return dict(record) if record is not None else None
 
 # def get_data_record(connection, id):
 # 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -108,7 +108,13 @@ def get_submission_record_count(connection):
 
 def get_pending_submission_record_count(connection):
 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-	cursor.execute("SELECT COUNT(*) as count FROM submissions WHERE processed=false;")
+	cursor.execute("SELECT COUNT(*) as count FROM submissions WHERE processed=true AND ready=false;")
+	record = cursor.fetchone()
+	return dict(record) if record is not None else None
+
+def get_ready_submission_record_count(connection):
+	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+	cursor.execute("SELECT COUNT(*) as count FROM submissions WHERE processed=true AND ready=true;")
 	record = cursor.fetchone()
 	return dict(record) if record is not None else None
 
@@ -131,9 +137,14 @@ def get_expired_active_url_records(connection, delay, error_limit):
 
 def get_pending_submission_record(connection):
 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-	cursor.execute("SELECT * FROM submissions WHERE processed=false ORDER BY RANDOM() LIMIT 1", (id,))
+	cursor.execute("SELECT * FROM submissions WHERE processed=true AND ready=true ORDER BY RANDOM() LIMIT 1")
 	record = cursor.fetchone()
 	return dict(record) if record is not None else None
+
+def get_unprocessed_submission_records(connection):
+	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+	cursor.execute("SELECT * FROM submissions WHERE processed=false")
+	return cursor.fetchall()
 
 def get_recent_active_data_records(connection, limit):
 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)

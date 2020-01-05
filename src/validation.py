@@ -18,7 +18,8 @@ class ManageForm(FlaskForm):
 class PreviewForm(FlaskForm):
 	class Meta:
 		csrf = False
-	url = StringField("url", validators=[DataRequired(), URL()])
+	id = IntegerField("id", validators=[Optional()])
+	url = StringField("url", validators=[Optional(), URL()])
 
 class SearchForm(FlaskForm):
 	class Meta:

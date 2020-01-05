@@ -76,9 +76,12 @@ def manage():
 		if record is not None and form.data["action"] == "approve" and not db.check_url_exists(connection, form.data["url"]):
 			data = {"url": form.data["url"], "removed": "false"}
 			db.create_url_record(connection, data)
-		data = {"processed": "true"}
-		db.update_submission_record(connection, str(form.data["id"]), data)
+		db.delete_submission_record(connection, form.data["id"])
 		connection.commit()
+		misc.log_message(f"""Deleted submission record: {form.data["id"]}""")
+		file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(form.data["id"]) + ".png")
+		os.remove(file_path_screenshot)
+		misc.log_message(f"""Deleted local preview screenshot: {file_path_screenshot}""")
 	next_record = db.get_pending_submission_record(connection)
 	if next_record is not None:
 		data["id"] = next_record["id"]
@@ -136,9 +139,13 @@ def submit():
 def preview():
 	form = v.PreviewForm(request.values)
 	if form.validate():
-		filename = ss.generate_screenshot({"url": form.data["url"], "width": 1280, "height": 720, "delay": 1})
-		return send_file(filename)
-	return render_template("error.html", page_title=misc.page_title("500"), data={"header": "500", "error": f"""Unable to load URL."""}), 500
+		filename = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(form.data["id"]) + ".png")
+		if os.path.exists(filename):
+			return send_file(filename)
+		else:
+			filename = ss.generate_screenshot({"url": form.data["url"], "width": 1280, "height": 720, "delay": 1})
+			return send_file(filename)
+	return render_template("error.html", page_title=misc.page_title("500"), data={"header": "500", "error": f"""Unable to generate preview."""}), 500
 
 @app.route("/proof/<data_id>", methods=["GET"])
 def proof(data_id):

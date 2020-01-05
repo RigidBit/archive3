@@ -15,13 +15,15 @@ CREATE TABLE "submissions"
 (
 	"id" serial NOT NULL,
 	"url" varchar(65535) NOT NULL,
-	"ip" varchar(45) NOT NULL,
-	"processed" boolean NOT NULL,
+	"ip" varchar(45) NOT NULL DEFAULT '',
+	"processed" boolean NOT NULL DEFAULT false,
+	"ready" boolean NOT NULL DEFAULT false,
 	"timestamp" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id)
 );
 
 CREATE INDEX "ix_submissions_processed_timestamp" ON "submissions" ("processed", "timestamp");
+CREATE INDEX "ix_submissions_processed_ready" ON "submissions" ("processed", "ready");
 
 CREATE TABLE "urls"
 (

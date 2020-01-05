@@ -42,7 +42,7 @@ module.exports =
 	},
 	output:
 	{
-		path: path.resolve(__dirname, "src/static/style"),
+		path: path.resolve(__dirname, "static/style"),
 	},
 	plugins:
 	[
