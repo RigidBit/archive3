@@ -2,60 +2,65 @@
 
 {% block body %}
 {% include "header.html" %}
-{% if data.url is defined %}
+{% if data.pending is defined and data.pending|length > 0 %}
 <div class="main-content-container manage">
 	<form id="form" actions="/manage" method="post">
-		<input id="action" type="hidden" name="action" value="">
-		<input id="id" type="hidden" name="id" value="{{ data.id }}">
-		<button id="reject" type="button">Reject</button>
-		<button id="approve" type="button">Approve</button>
-		<input id="url" type="text" name="url" value="{{ data.url }}">
-		<div id="tools">
-			<i class="fas fa-info-circle" title="{{ data.id }} {{ data.ip }} {{ data.url }}"></i>
-			<a href="#reload"><i class="fas fa-redo-alt"></i></a>
-			<a href="{{ data.url }}" target="_blank"><i class="fas fa-link"></i></a>
-			<a href="#+www">+W</a>
-			<a href="#-www">-W</a>
-			<a href="#+s">+S</a>
-			<a href="#-s">-S</a>
-			<a href="#+/">+/</a>
-			<a href="#-/">-/</a>
-		</div>
+		<input id="accepted" type="hidden" name="accepted" value="">
+		<input id="rejected" type="hidden" name="rejected" value="">
 	</form>
-	<img id="preview" src="/preview?id={{ data.id }}" alt="Preview Image">
+	<div class="tools">
+		<button class="approve-reject" type="button">Approve/Reject All</button>
+	</div>
+	<div class="sites-container">
+		{% for data in data.pending %}
+		<div class="site">
+			<img class="preview" src="/preview?id={{ data.id }}" data-id="{{ data.id }}" alt="Preview Image" title="{{ data.id }} {{ data.ip }} {{ data.url }}">
+			<a class="link" href="{{ data.url }}" target="_blank">{{ data.url }}</a>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="tools">
+		<button class="approve-reject" type="button">Approve/Reject All</button>
+	</div>
 	<script>
-		$("#reject").on("click", (e)=>
+		let accepted = [];
+		let rejected = [];
+		$(".preview").on("click", function(e)
 		{
-			$("#action").val("reject");
-			$("#form").submit();
-		});
-		$("#approve").on("click", (e)=>
-		{
-			$("#action").val("approve");
-			$("#form").submit();
-		});
-		function updateUrl()
-		{
-			$("#preview").attr("src", "");
-			setTimeout(function()
-			{
-				$("#preview").attr("src", "/preview?url=" + $("#url").val());
-			}, 1);
-		}
-		$("#url").on("change, keyup", (e)=>{ updateUrl(); });
-		$("a[href='#+www']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val().replace("//", "//www.")); updateUrl(); });
-		$("a[href='#-www']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val().replace("//www.", "//")); updateUrl(); });
-		$("a[href='#+s']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val().replace("http://", "https://")); updateUrl(); });
-		$("a[href='#-s']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val().replace("https://", "http://")); updateUrl(); });
-		$("a[href='#+/']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val() + "/"); updateUrl(); });
-		$("a[href='#-/']").on("click", (e)=>{ e.preventDefault(); $("#url").val($("#url").val().replace(/\/$/, "")); updateUrl(); });
-		$("a[href='#reload']").on("click", (e)=>{ e.preventDefault(); updateUrl(); });
+			const $this = $(e.currentTarget);
+			const id = $this.data("id");
 
-		let url = "{{ data.url }}";
-		url = url.replace("//www.", "//");
-		url = url.replace("http://", "https://");
-		if(/\.[a-z]{1,3}$/.test(url)) { url += "/"; }
-		$("#url").val(url);
+			if(!rejected.includes(id))
+			{
+				rejected.push(id);
+				$this.addClass("rejected");
+				$this.parent().addClass("rejected");
+			}
+			else
+			{
+				const index = rejected.indexOf(id);
+				if( index !== -1)
+				{
+					rejected.splice(index, 1);
+					$this.removeClass("rejected");
+					$this.parent().removeClass("rejected");
+				}
+			}
+		});
+		$(".approve-reject").on("click", function(e)
+		{
+			accepted = [];
+			$(".preview").each(function()
+			{
+				const $this = $(this);
+				const id = $this.data("id");
+				if(!rejected.includes(id))
+					accepted.push(id);
+			});
+			$("#accepted").val(JSON.stringify(accepted));
+			$("#rejected").val(JSON.stringify(rejected));
+			$("#form").submit();
+		});
 	</script>
 </div>
 {% else %}

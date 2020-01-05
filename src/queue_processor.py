@@ -23,7 +23,7 @@ while True:
 		queue.put(json.dumps(payload), ttr=int(os.getenv("ARCHIVE3_PROCESSING_TTR")))
 		misc.log_message(f"""Queued Screenshot {e["id"]}: {e["url"]}""")
 	for p in db.get_unprocessed_submission_records(connection):
-		if db.get_ready_submission_record_count(connection) >= int(os.getenv("ARCHIVE3_PROCESSING_READY_LIMIT")):
+		if db.get_ready_submission_record_count(connection)["count"] >= int(os.getenv("ARCHIVE3_PROCESSING_READY_LIMIT")):
 			break
 		if db.check_url_exists(connection, p["url"]):
 			db.delete_submission_record(connection, p["id"])

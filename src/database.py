@@ -108,7 +108,7 @@ def get_submission_record_count(connection):
 
 def get_pending_submission_record_count(connection):
 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-	cursor.execute("SELECT COUNT(*) as count FROM submissions WHERE processed=true AND ready=false;")
+	cursor.execute("SELECT COUNT(*) as count FROM submissions;")
 	record = cursor.fetchone()
 	return dict(record) if record is not None else None
 
@@ -140,6 +140,11 @@ def get_pending_submission_record(connection):
 	cursor.execute("SELECT * FROM submissions WHERE processed=true AND ready=true ORDER BY RANDOM() LIMIT 1")
 	record = cursor.fetchone()
 	return dict(record) if record is not None else None
+
+def get_pending_submission_records(connection, limit):
+	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+	cursor.execute("SELECT * FROM submissions WHERE processed=true AND ready=true LIMIT %s", (limit,))
+	return cursor.fetchall()
 
 def get_unprocessed_submission_records(connection):
 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)

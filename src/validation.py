@@ -11,9 +11,8 @@ class BuriedForm(FlaskForm):
 class ManageForm(FlaskForm):
 	class Meta:
 		csrf = False
-	action = StringField("action", validators=[DataRequired()])
-	id = IntegerField("id", validators=[DataRequired()])
-	url = StringField("url", validators=[DataRequired(), URL()])
+	accepted = StringField("accepted", validators=[DataRequired()])
+	rejected = StringField("rejected", validators=[DataRequired()])
 
 class PreviewForm(FlaskForm):
 	class Meta:

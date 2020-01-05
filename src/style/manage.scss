@@ -15,13 +15,54 @@
 		margin-bottom: $margin-default;
 	}
 
-	#tools
+	.tools
 	{
-		display: inline-block;
+		padding: $padding-default;
+	}
 
-		a
+	.sites-container
+	{
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-gap: $margin-default;
+		justify-items: center;
+		margin: 0 auto;
+		width: 1398px;
+
+		.site
 		{
-			margin-right: $margin-button;
+			background: #eeeeee;
+			border: 1px solid $border-color-default;
+			font-size: 12px;
+			padding: $padding-default;
+			text-align: center;
+			width: 342px;
+
+			&.rejected
+			{
+				background: #ffeeee;
+			}
+
+			.preview
+			{
+				cursor: pointer;
+				display: block;
+				width: 320px;
+
+				&.rejected
+				{
+					filter: grayscale(100%);
+					opacity: 0.3;
+				}
+			}
+
+			.link
+			{
+				display: block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 100%;
+			}
 		}
 	}
 

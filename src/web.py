@@ -72,21 +72,27 @@ def manage():
 	data = {}
 	form = v.ManageForm()
 	if form.validate_on_submit():
-		record = db.get_submission_record(connection, str(form.data["id"]))
-		if record is not None and form.data["action"] == "approve" and not db.check_url_exists(connection, form.data["url"]):
-			data = {"url": form.data["url"], "removed": "false"}
-			db.create_url_record(connection, data)
-		db.delete_submission_record(connection, form.data["id"])
+		accepted = json.loads(form.data["accepted"])
+		for item in accepted:
+			record = db.get_submission_record(connection, item)
+			if record is not None and not db.check_url_exists(connection, record["url"]):
+				data = {"url": record["url"]}
+				db.create_url_record(connection, data)
+				misc.log_message(f"""Created url record: {record["url"]}""")
+			db.delete_submission_record(connection, item)
+			misc.log_message(f"""Deleted submission record: {item}""")
+			file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(item) + ".png")
+			os.remove(file_path_screenshot)
+			misc.log_message(f"""Deleted local preview screenshot: {file_path_screenshot}""")
+		rejected = json.loads(form.data["rejected"])
+		for item in rejected:
+			db.delete_submission_record(connection, item)
+			misc.log_message(f"""Deleted submission record: {item}""")
+			file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(item) + ".png")
+			os.remove(file_path_screenshot)
+			misc.log_message(f"""Deleted local preview screenshot: {file_path_screenshot}""")
 		connection.commit()
-		misc.log_message(f"""Deleted submission record: {form.data["id"]}""")
-		file_path_screenshot = os.path.join(os.getcwd(), os.getenv("ARCHIVE3_SCREENSHOT_DIR"), "preview-" + str(form.data["id"]) + ".png")
-		os.remove(file_path_screenshot)
-		misc.log_message(f"""Deleted local preview screenshot: {file_path_screenshot}""")
-	next_record = db.get_pending_submission_record(connection)
-	if next_record is not None:
-		data["id"] = next_record["id"]
-		data["ip"] = next_record["ip"]
-		data["url"] = next_record["url"]
+	data["pending"] = db.get_pending_submission_records(connection, 100)
 	return render_template("manage.html", page_title=misc.page_title("manage"), data=data)
 
 @app.route("/recent", methods=["GET"])
@@ -167,8 +173,8 @@ def stats():
 	{
 		"data_count": db.get_data_record_count(connection)["count"],
 		"url_count": db.get_url_record_count(connection)["count"],
-		"submission_count": db.get_submission_record_count(connection)["count"],
 		"pending_submission_count": db.get_pending_submission_record_count(connection)["count"],
+		"ready_submission_count": db.get_ready_submission_record_count(connection)["count"],
 	}
 	return render_template("stats.html", page_title=misc.page_title("stats"), data=data)
 
