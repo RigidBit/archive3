@@ -92,7 +92,7 @@ def process_preview(connection, payload):
 	response.raise_for_status()
 
 	# Generate screenshot.
-	file_path_temp = ss.generate_screenshot({"url": payload["url"], "width": 1280, "height": 720, "delay": 1})
+	file_path_temp = ss.generate_screenshot({"url": payload["url"], "width": 1280, "height": 720, "delay": 2})
 	misc.log_message(f"Generated screenshot: {file_path_temp}")
 
 	# Compress screenshot.
