@@ -123,8 +123,9 @@ def submit():
 	data = {}
 	form = v.SubmitForm()
 	if form.validate_on_submit():
-		if not db.check_url_exists(connection, form.data["url"]) and not db.check_active_submission_exists(connection, form.data["url"]):
-			data = {"url": form.data["url"], "ip": request.remote_addr, "processed": "false"}
+		url = misc.normalize_url(form.data["url"])
+		if not db.check_url_exists(connection, url) and not db.check_active_submission_exists(connection, url):
+			data = {"url": url, "ip": request.remote_addr, "processed": "false"}
 			db.create_submission_record(connection, data)
 			connection.commit()
 		data["message"] = "Your URL submission has been received. Thank you."

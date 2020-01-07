@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import re
 import sys
 import threading
 
@@ -20,6 +21,13 @@ def log_message(message):
 	if os.getenv("ARCHIVE3_VERBOSE") == "true":
 		print(threading.current_thread().name, message)
 		sys.stdout.flush()
+
+def normalize_url(url):
+	url = url.replace("http://", "https://")
+	url = url.replace("https://www.", "https://")
+	if re.compile(r"^http[s]?://?(?:[^:/\s]+)(?::[0-9]{1,5})?$").match(url):
+		url += "/"
+	return url
 
 def hash_to_path(hash):
 	depth = int(os.getenv("ARCHIVE3_SCREENSHOT_DIR_DEPTH"))
