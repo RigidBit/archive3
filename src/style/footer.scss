@@ -10,52 +10,59 @@ footer
 	div.grid-container
 	{
 		display: grid;
-		grid-template-columns: 1fr 2fr 1fr;
+		grid-template-columns: 3fr 150px 150px;
 		grid-column-gap: $margin-thick;
 		margin: 0 auto $margin-default auto;
-		max-width: 1280px;
+		max-width: 950px;
 
 		@media screen and (max-width: #{map-get($breakpoints, "tablet")})
 		{
 			display: block;
 		}
 
-		.visual
+		.text
 		{
 			position: relative;
 
 			div.logo
 			{
-				position: absolute;
-				transform: translateX(-50%) translateY(-50%);
-				left: 50%;
-				top: 30%;
-				text-align: center;
-
 				@media screen and (max-width: #{map-get($breakpoints, "tablet")})
 				{
-					position: static;
-					transform: none;
+					text-align: center;
 				}
 
 				img.logo
 				{
 					height: 50px;
+					position: relative;
+					left: -10px;
+					top: -10px;
+
+					@media screen and (max-width: #{map-get($breakpoints, "tablet")})
+					{
+						left: 0;
+						top: 0;
+					}
 				}
 			}
 		}
 	
-		// .text
-		// {
-		// }
-
-		.links
+		.links,
+		.external-links
 		{
 			padding: 0;
 
 			@media screen and (max-width: #{map-get($breakpoints, "tablet")})
 			{
 				text-align: center;
+			}
+
+			@media screen and (max-width: #{map-get($breakpoints, "tablet")})
+			{
+				h2
+				{
+					display: none;
+				}
 			}
 
 			ul
@@ -68,11 +75,12 @@ footer
 				{
 					display: block;
 					padding: 0;
+					margin: 0;
 					
 					@media screen and (max-width: #{map-get($breakpoints, "tablet")})
 					{
 						display: inline-block;
-						padding: 0 $padding-default;
+						padding: 0 $margin-button/2;
 					}
 				}
 			}
