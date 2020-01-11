@@ -28,3 +28,4 @@ htmlcov/
 data/
 static/style/*.css
 node_modules
+src/static/style/
