@@ -35,12 +35,21 @@
 			border: 1px solid $border-color-default;
 			font-size: 12px;
 			padding: $padding-default;
+			position: relative;
 			text-align: center;
 			width: 342px;
 
 			&.rejected
 			{
 				background: #ffeeee;
+			}
+
+			.external
+			{
+				font-size: 30px;
+				position: absolute;
+				top: $padding-default;
+				right: $padding-default;
 			}
 
 			.preview

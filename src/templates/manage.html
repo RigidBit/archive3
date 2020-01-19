@@ -15,6 +15,7 @@
 		{% for data in data.pending %}
 		<div class="site">
 			<img class="preview" src="/preview?id={{ data.id }}" data-id="{{ data.id }}" alt="Preview Image" title="{{ data.id }} {{ data.ip }} {{ data.url }}">
+			<a class="external" href="/preview?id={{ data.id }}" target="_blank"><i class="fas fa-external-link-alt"></i></a>
 			<a class="link" href="{{ data.url }}" target="_blank">{{ data.url }}</a>
 		</div>
 		{% endfor %}
