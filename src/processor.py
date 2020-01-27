@@ -22,6 +22,8 @@ def process_screenshot(connection, payload):
 	try:
 		headers = {"User-Agent": os.getenv("ARCHIVE3_USER_AGENT")}
 		response = requests.get(payload["url"], headers=headers, timeout=int(os.getenv("ARCHIVE3_URL_TIMEOUT")))
+		if len(response.content) < 1:
+			raise Exception("No content received.")
 	except:
 		raise Exception(f"""Failure while loading URL: {payload["url"]}""")
 	response.raise_for_status()
