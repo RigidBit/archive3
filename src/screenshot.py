@@ -6,7 +6,7 @@ import requests
 import tempfile
 import time
 
-DEFAULT_SETTINGS = {"maxWidth": 1366, "maxHeight": 1080*10, "minWidth": 1, "minHeight": 1, "width": 1920, "height": 1080, "full_page": False, "fullPageMaxLoops": 3, "delay": 3,  "maxDelay": 10}
+DEFAULT_SETTINGS = {"maxWidth": 1366, "maxHeight": 1080*10, "minWidth": 1, "minHeight": 1, "width": 1920, "height": 1080, "full_page": False, "fullPageMaxLoops": 3, "delay": 5,  "maxDelay": 10}
 
 def determine_screenshot_filename(request_id):
 	return os.getenv("ARCHIVE3_SCREENSHOT_DIR") + "/" + str(request_id) + ".png"
