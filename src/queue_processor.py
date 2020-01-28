@@ -13,14 +13,22 @@ import misc
 load_dotenv()
 queue = greenstalk.Client(host=os.getenv("GREENSTALK_HOST"), port=os.getenv("GREENSTALK_PORT"), use=os.getenv("GREENSTALK_TUBE_QUEUE"))
 
+def queue_screenshot(connection, id, url):
+	data = {"timestamp_queued": "NOW()"}
+	db.update_url_record(connection, id, data)
+	connection.commit()
+	payload = {"type": "screenshot", "id": id, "url": url}
+	queue.put(json.dumps(payload), ttr=int(os.getenv("ARCHIVE3_PROCESSING_TTR")))
+
 while True:
 	connection = db.connect()
-	for e in db.get_expired_active_url_records(connection, int(os.getenv("ARCHIVE3_URL_EXPIRATION")), int(os.getenv("ARCHIVE3_URL_ERROR_RETRIES"))):
-		data = {"timestamp_queued": "NOW()"}
-		db.update_url_record(connection, e["id"], data)
-		connection.commit()
-		payload = {"type": "screenshot", "id": e["id"], "url": e["url"]}
-		queue.put(json.dumps(payload), ttr=int(os.getenv("ARCHIVE3_PROCESSING_TTR")))
+	expired = db.get_expired_active_url_records(connection, int(os.getenv("ARCHIVE3_URL_EXPIRATION")), int(os.getenv("ARCHIVE3_URL_ERROR_RETRIES")))
+	if len(expired) == 0 and os.getenv("ARCHIVE3_QUEUE_RANDOM_URLS") == "true":
+		e = db.get_random_url_record(connection, int(os.getenv("ARCHIVE3_URL_ERROR_RETRIES")))
+		queue_screenshot(connection, e["id"], e["url"])
+		misc.log_message(f"""Queued Random Screenshot {e["id"]}: {e["url"]}""")
+	for e in expired:
+		queue_screenshot(connection, e["id"], e["url"])
 		misc.log_message(f"""Queued Screenshot {e["id"]}: {e["url"]}""")
 	for p in db.get_unprocessed_submission_records(connection):
 		if db.get_processed_submission_record_count(connection)["count"] >= int(os.getenv("ARCHIVE3_PROCESSING_READY_LIMIT")):

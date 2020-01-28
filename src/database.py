@@ -118,6 +118,12 @@ def get_processed_submission_record_count(connection):
 	record = cursor.fetchone()
 	return dict(record) if record is not None else None
 
+def get_random_url_record(connection, error_limit):
+	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+	cursor.execute("SELECT id, url FROM urls WHERE removed=false AND errors < %s ORDER BY RANDOM()", (error_limit,))
+	record = cursor.fetchone()
+	return dict(record) if record is not None else None
+
 def get_ready_submission_record_count(connection):
 	cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 	cursor.execute("SELECT COUNT(*) as count FROM submissions WHERE processed=true AND ready=true;")
