@@ -70,7 +70,7 @@ def process_screenshot(connection, payload):
 	misc.log_message(f"""Created data record: {data_record_id}""")
 
 	# Delete screenshots.
-	if os.getenv("ARCHIVE3_DELETE_SCREENSHOTS"):
+	if os.getenv("ARCHIVE3_DELETE_SCREENSHOTS") == "true":
 		os.remove(file_path_screenshot)
 		misc.log_message(f"""Deleted local screenshot: {file_path_screenshot}""")
 		os.remove(file_path_thumb)
