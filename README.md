@@ -23,13 +23,20 @@ You must have the following installed in your development environment to properl
 * Npm (Automatically installed by nvm.)
 * Npx (Automatically installed by nvm.)
 
-## Development Server Prerequisites
+## Production Server Prerequisites
 
 * Apache or Nginx with WSGI/UWSGI capability.
 * Beanstalkd (https://beanstalkd.github.io/)
 * PostgreSQL (https://www.postgresql.org/)
 * RigidBit (https://www.rigidbit.com/)
 * Selenium server with Chrome webdriver.
+
+### Production Server Fonts
+
+Websites in languages that do not use Roman characters may require additional fonts to display correctly. The fonts DejaVu and Noto are free fonts that can be installed which handle many of the common languages.
+
+* fonts-noto (https://www.google.com/get/noto/)
+* ttf-dejavu (https://dejavu-fonts.github.io/)
 
 ## Basic Webserver Setup Procedure
 * Create a web directory and create an initialized venv directory within it.
