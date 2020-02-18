@@ -2,6 +2,7 @@ selenium==3.141.0
 requests==2.18.4
 boto3==1.10.46
 Flask==1.1.1
+flask_testing==0.7.1
 flask_wtf==0.14.2
 greenstalk==1.0.1
 Pillow==7.0.0
