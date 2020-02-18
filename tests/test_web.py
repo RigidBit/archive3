@@ -110,11 +110,11 @@ class TestWeb(LiveServerTestCase):
 		response = requests.post(self.get_server_url() + "/manage", data=data, auth=requests.auth.HTTPBasicAuth("", "password"))
 		self.assertEqual(response.status_code, 200)
 
-	def test_view_url(self):
+	def test_z_view_url(self):
 		response = requests.get(self.get_server_url() + "/view?url=https://google.com/")
 		self.assertEqual(response.status_code, 200)
 
-	def test_view_url_nonexistent(self):
+	def test_z_view_url_nonexistent(self):
 		response = requests.get(self.get_server_url() + "/view?url=https://yahoo.com/")
 		self.assertEqual(response.status_code, 404)
 
