@@ -19,9 +19,17 @@
 		</div>
 		{% endfor %}
 	</div>
+	<div class="submit">
+		Don't see what you're looking for?<br>
+		<a href="/submit">Submit a URL</a>
+	</div>
 	{% else %}
 	<div class="notice">
 		Your search returned no results.
+	</div>
+	<div class="submit">
+		Don't see what you're looking for?<br>
+		<a href="/submit">Submit a URL</a>
 	</div>
 	{% endif %}
 </div>
