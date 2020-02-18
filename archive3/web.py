@@ -8,6 +8,7 @@ import mimetypes
 import os
 import requests
 
+from decorators import admin_required
 import misc
 import database as db
 import screenshot as ss
@@ -18,6 +19,9 @@ import validation as v
 load_dotenv()
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET_KEY")
+
+if __name__ == "__main__":
+	app.run(host="0.0.0.0")
 
 ##### STATIC ROUTES #####
 
@@ -47,6 +51,7 @@ def privacy_policy():
 ##### DYNAMIC API ROUTES #####
 
 @app.route("/buried", methods=["GET", "POST"])
+@admin_required
 def buried():
 	queue = greenstalk.Client(host=os.getenv("GREENSTALK_HOST"), port=os.getenv("GREENSTALK_PORT"), use=os.getenv("GREENSTALK_TUBE_QUEUE"))
 	form = v.BuriedForm()
@@ -67,6 +72,7 @@ def buried():
 	return render_template("buried.html", page_title=misc.page_title("buried"), data=data)
 
 @app.route("/manage", methods=["GET", "POST"])
+@admin_required
 def manage():
 	connection = db.connect()
 	data = {}
@@ -168,6 +174,7 @@ def proof(data_id):
 	return render_template("error.html", page_title=misc.page_title("404"), data={"header": "404", "error": f"""Proof not found or not yet available."""}), 404
 
 @app.route("/stats", methods=["GET"])
+@admin_required
 def stats():
 	connection = db.connect()
 	data = \
@@ -202,6 +209,3 @@ def view():
 @app.route("/", methods=["GET"])
 def root():
 	return render_template("index.html", page_title=misc.page_title("default"))
-
-if __name__ == "__main__":
-	app.run(host="0.0.0.0")

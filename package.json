@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx webpack --watch --config webpack.config.js",
     "build": "npx webpack --config webpack.config.js",
-    "flask": "FLASK_APP=src/web.py FLASK_DEBUG=1 python -m flask run -h 0.0.0.0 -p 5001"
+    "flask": "FLASK_APP=archive3/web.py FLASK_DEBUG=1 python -m flask run -h 0.0.0.0 -p 5001",
   },
   "author": "",
   "license": "",

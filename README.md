@@ -70,7 +70,7 @@ source venv/bin/activate
 ```
 or
 ```
-FLASK_APP=src/web.py FLASK_DEBUG=1 python -m flask run -h 0.0.0.0 -p 5001
+FLASK_APP=archive3/web.py FLASK_DEBUG=1 python -m flask run -h 0.0.0.0 -p 5001
 ```
 
 ### Starting the development CSS builder:
