@@ -1,0 +1,15 @@
+dist: bionic
+addons:
+  apt: 
+    packages:
+      - beanstalkd
+services:
+  - postgresql
+language: python
+before_script:
+  - psql -c 'create database archive3;' -U postgres
+  - psql -U postgres -w -d archive3 -q -f dev/sql/create_tables.sql
+#  - psql -U postgres -w -d archive3 -q -f dev/test/data.sql
+  - cp dev/test/.env.travis .env
+script:
+  - python -m unittest discover tests
