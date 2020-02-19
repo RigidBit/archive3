@@ -60,19 +60,22 @@ source venv/bin/activate
 
 ### Installing dependencies:
 ```
-source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Saving dependencies:
+### Saving dependencies to requirements.txt:
 Using `pipreqs` is recommended over `pip`. While in an active venv use the following to regenerate `requirements.txt`.
 ```
 pipreqs --ignore node_modules --force
 ```
 
+### Setting up the .env file:
+
+See `README_ENV.md` for a basic template.
+
 ### Starting the development server:
 ```
-source venv/bin/activate
+npm run flask
 ```
 or
 ```
@@ -86,17 +89,68 @@ npm start
 
 ### Starting the processing service:
 ```
-source venv/bin/activate
 python3 processor.py
 ```
 
 ### Starting the queue processing service:
 ```
-source venv/bin/activate
 python3 queue_processor.py
 ```
 
 ### Building static assets for production:
 ```
 npm build
+```
+
+### Web:
+Copy the following files and folders to the remote server.
+```
+archive3/*.py
+archive3/templates/*
+static/*
+requirements.txt
+uwsgi.ini
+```
+Create the following empty folders.
+```
+data
+```
+Create symbolic links.
+```
+ln -s ./data archive3/data
+ln -s ./static archive3/static
+```
+Create a venv and install the requirements.
+```
+python -m venv init venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Configuring the web server:
+
+Setup your webserver to serve static content from the `static` folder. All other requests should be sent to the uWSGI handler.
+
+See `README_APACHE.md` for a basic Apache configuration example.
+See `README_NGINX.md` for a basic NGINX configuration example.
+
+### Setting up services:
+You will need to also setup services for:
+- processor.py
+- queue_processor.py
+- uwsgi.py
+
+You can use any service manager, but `systemd` is recommended. See `README_SERVICES.md` for a basic configuration examples.
+
+## Testing
+
+Setup the venv, symlinks, and database as noted above. The `.env` will need to be populated with valid settings. The webserver and uWSGI is not needed for testing.
+
+To launch tests execute the following command from the project root:
+```
+npm run test
+```
+or
+```
+python -m unittest discover tests
 ```
