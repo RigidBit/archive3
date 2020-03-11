@@ -4,7 +4,7 @@
 [![Requirements Status](https://requires.io/github/RigidBit/archive3/requirements.svg?branch=master)](https://requires.io/github/RigidBit/archive3/requirements/?branch=master)
 ![Status](https://img.shields.io/uptimerobot/status/m784351886-ad46f26677bcc9e5b890aaf4)
 ![Uptime](https://img.shields.io/uptimerobot/ratio/m784351886-ad46f26677bcc9e5b890aaf4)
-[![Twitter Follow](https://img.shields.io/twitter/follow/archive3?style=social)](https://twitter.com/archive3)
+[![Twitter Follow](https://img.shields.io/twitter/follow/archive3web?style=social)](https://twitter.com/archive3web)
 
 This is the primary codebase for the Archive3 web application.
 
